@@ -6,6 +6,7 @@ use App\Models\Classroom;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
+
 class ClassroomController extends Controller
 {
     /**
@@ -79,8 +80,14 @@ class ClassroomController extends Controller
     public function destroy(string $id)
     {
         $classroom = Classroom::findOrFail($id);
-        $classroom->delete();
-        return redirect()->route('classroom.index')
-            ->with('success', 'Classroom deleted successfully.');
+
+    // Hapus semua siswa di kelas ini dulu
+    $classroom->students()->delete();
+
+    // Baru hapus kelasnya
+    $classroom->delete();
+
+    return redirect()->route('classroom.index')
+        ->with('success', 'Classroom & students deleted successfully.');
     }
 }

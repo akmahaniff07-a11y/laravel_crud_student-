@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Student;
 
 class Classroom extends Model
 {
@@ -10,6 +11,6 @@ class Classroom extends Model
 
     public function students()
     {
-        return $this->hasMany(Student::class);
+        return $this->hasMany(Student::class, 'classrooms_id');
     }
 }
